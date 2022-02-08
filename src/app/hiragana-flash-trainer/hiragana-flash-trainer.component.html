@@ -1,5 +1,5 @@
 <p>hiragana-flash-trainer works!</p>
-<mat-grid-list cols="5" rowHeight="1:1" gutterSize="10">
+<!-- <mat-grid-list cols="5" rowHeight="1:1" gutterSize="10">
     <ng-container *ngFor="let item of getHiraganaRowTitles()">
         <mat-grid-tile *ngFor="let char of getHiraganaRowCharacters(item)">
             <button mat-raised-button>
@@ -7,4 +7,18 @@
             </button>
         </mat-grid-tile>
     </ng-container>
-</mat-grid-list>
+</mat-grid-list> -->
+<mat-card style="margin: 1rem; width: fit-content;">
+    <table>
+        <tr *ngFor="let item of getHiraganaRowTitles()">
+            <!-- {{getHiraganaRowCharacters(item) | json}} -->
+            <td *ngFor="let char of getHiraganaRowCharacters(item); trackBy:englishCharacter">
+                    <button mat-raised-button
+                        [disabled]="checkHiraganaSelected(selectedCharacters$ | async, char?.english)"
+                    >
+                        {{char?.japanese}}
+                    </button>
+            </td>
+        </tr>
+    </table>
+</mat-card>
