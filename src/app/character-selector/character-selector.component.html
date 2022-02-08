@@ -1,0 +1,30 @@
+{{selectedCharacters$ | async | json}}
+
+<mat-grid-list cols="6" rowHeight="3:1">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile *ngFor="let item of getHiraganaColumnTitles()">
+        <mat-checkbox [disabled]="true">{{item}}</mat-checkbox>
+    </mat-grid-tile>
+    <ng-container *ngFor="let rowTitle of getHiraganaRowTitles()">
+        <mat-grid-tile>
+            <mat-checkbox
+            [checked]="checkHiraganaRowSelected(selectedCharacters$ | async, rowTitle)"
+            [indeterminate]="checkHiraganaRowPartial(selectedCharacters$ | async, rowTitle)"
+            (change)="toggleHiraganaRowSelected(rowTitle, $event)"
+            >
+                {{rowTitle}}
+            </mat-checkbox>
+        </mat-grid-tile>
+        <mat-grid-tile *ngFor="let item of getHiraganaRowCharacters(rowTitle)">
+            <mat-card>
+                
+                <mat-checkbox
+                    [checked]="checkHiraganaSelected(selectedCharacters$ | async, item)"
+                    (change)="toggleHiraganaSelected(item)"
+                >
+                    {{buildCharacter(item, rowTitle) | json}}
+                </mat-checkbox>
+            </mat-card>
+        </mat-grid-tile>
+    </ng-container>
+</mat-grid-list>
