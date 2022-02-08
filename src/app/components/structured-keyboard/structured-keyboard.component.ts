@@ -1,9 +1,9 @@
 import { Component, EventEmitter, OnInit, Output, TrackByFunction } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Character } from '../character';
-import { hiraganaCharMap } from '../hiragana';
-import { SettingsChallengeLanguageOptions, SettingsState } from '../store/settings.reducer';
-import { selectChallengeLanguage, selectEnabledHiragana } from '../store/settings.selectors';
+import { Character } from '../../character';
+import { hiraganaCharMap } from '../../hiragana';
+import { SettingsChallengeLanguageOptions, SettingsState } from '../../store/settings/settings.reducer';
+import { selectChallengeLanguage, selectEnabledHiragana } from '../../store/settings/settings.selectors';
 
 @Component({
   selector: 'app-structured-keyboard',

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Character } from '../character';
+import { Character } from '../../character';
 import { SettingsAnswerKeyboardTypeOptions, SettingsChallengeLanguageOptions } from './settings.reducer';
 
 export const setSelectedCharacters = createAction(

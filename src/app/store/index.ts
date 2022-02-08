@@ -7,7 +7,7 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 
-import * as fromSelectedCharacter from './settings.reducer';
+import * as fromSelectedCharacter from './settings/settings.reducer';
 
 
 export interface State {

@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { Character } from '../character';
-import { hiraganaCharMap } from '../hiragana';
+import { Character } from '../../character';
+import { hiraganaCharMap } from '../../hiragana';
 import * as SettingsActions from './settings.actions';
 
 export const settingsFeatureKey = 'settings';

@@ -1,11 +1,10 @@
 import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Character } from '../character';
-import { hiraganaCharMap } from '../hiragana';
-import { SettingsChallengeLanguageOptions, SettingsState } from '../store/settings.reducer';
-import { featureSettings, selectAnswerKeyboardType, selectChallengeLanguage, selectHiraganaFlashQuery } from '../store/settings.selectors';
-import { HiraganaFlashTrainerService } from './flash-trainer.service';
-import * as SettingsActions from '../store/settings.actions';
+import { Character } from '../../character';
+import { hiraganaCharMap } from '../../hiragana';
+import { SettingsChallengeLanguageOptions, SettingsState } from '../../store/settings/settings.reducer';
+import { featureSettings, selectAnswerKeyboardType, selectChallengeLanguage, selectHiraganaFlashQuery } from '../../store/settings/settings.selectors';
+import * as SettingsActions from '../../store/settings/settings.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.component';
 

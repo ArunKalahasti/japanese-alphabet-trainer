@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { withLatestFrom, map, filter } from 'rxjs';
-import { Character } from '../character';
-import { hiraganaCharMap } from '../hiragana';
+import { Character } from '../../character';
+import { hiraganaCharMap } from '../../hiragana';
 import * as SettingsActions from './settings.actions';
 import { selectHiraganaFlashQuery } from './settings.selectors';
 

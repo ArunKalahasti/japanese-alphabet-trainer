@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { Store } from '@ngrx/store';
-import { selectAnswerKeyboardType, selectChallengeLanguage } from '../store/settings.selectors';
-import * as SettingsActions from '../store/settings.actions';
+import { selectAnswerKeyboardType, selectChallengeLanguage } from '../../store/settings/settings.selectors';
+import * as SettingsActions from '../../store/settings/settings.actions';
 
 @Component({
   selector: 'app-settings-dialog',

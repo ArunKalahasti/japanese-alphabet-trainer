@@ -1,9 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { map } from 'rxjs';
-import { Character } from '../character';
-import { SettingsChallengeLanguageOptions } from '../store/settings.reducer';
-import { selectChallengeLanguage, selectEnabledHiragana } from '../store/settings.selectors';
+import { Character } from '../../character';
+import { SettingsChallengeLanguageOptions } from '../../store/settings/settings.reducer';
+import { selectChallengeLanguage, selectEnabledHiragana } from '../../store/settings/settings.selectors';
 
 @Component({
   selector: 'app-randomized-keyboard',

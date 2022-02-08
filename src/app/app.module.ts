@@ -14,17 +14,17 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
-import { CharacterSelectorComponent } from './character-selector/character-selector.component';
+import { CharacterSelectorComponent } from './components/character-selector/character-selector.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { reducers, metaReducers } from './store';
 import { EffectsModule } from '@ngrx/effects';
-import { SettingsEffects } from './store/settings.effects';
-import { HiraganaFlashTrainerComponent } from './flash-trainer/flash-trainer.component';
-import { HiraganaKeyboardComponent } from './structured-keyboard/structured-keyboard.component';
-import { RandomizedKeyboardComponent } from './randomized-keyboard/randomized-keyboard.component';
-import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+import { SettingsEffects } from './store/settings/settings.effects';
+import { HiraganaFlashTrainerComponent } from './components/flash-trainer/flash-trainer.component';
+import { HiraganaKeyboardComponent } from './components/structured-keyboard/structured-keyboard.component';
+import { RandomizedKeyboardComponent } from './components/randomized-keyboard/randomized-keyboard.component';
+import { SettingsDialogComponent } from './components/settings-dialog/settings-dialog.component';
 
 @NgModule({
   declarations: [

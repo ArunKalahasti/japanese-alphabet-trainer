@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Character } from '../character';
-import { hiraganaCharMap } from '../hiragana';
-import { SettingsState } from '../store/settings.reducer';
-import { featureSettings } from '../store/settings.selectors';
-import * as SettingsActions from '../store/settings.actions';
+import { Character } from '../../character';
+import { hiraganaCharMap } from '../../hiragana';
+import { SettingsState } from '../../store/settings/settings.reducer';
+import { featureSettings } from '../../store/settings/settings.selectors';
+import * as SettingsActions from '../../store/settings/settings.actions';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
