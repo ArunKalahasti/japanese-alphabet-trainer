@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { hiragana } from './hiragana';
+import { hiraganaCharMap } from './hiragana';
 
 @Component({
   selector: 'app-root',
@@ -45,8 +45,8 @@ export class AppComponent implements OnInit {
     let i = 0;
     Object.keys(this.selectedGroup).forEach(group => {
       if (this.selectedGroup[group]) {
-        Object.keys(hiragana[group]).forEach(char => {
-          choices.push({h: hiragana[group][char], e: char, i});
+        Object.keys(hiraganaCharMap[group]).forEach(char => {
+          choices.push({h: hiraganaCharMap[group][char], e: char, i});
           i++;
         })
       }

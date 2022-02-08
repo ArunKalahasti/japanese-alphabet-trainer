@@ -1,12 +1,13 @@
-<mat-card style="margin: 1rem; width: fit-content;">
+<mat-card class="keyboard-container">
     <table>
         <tr *ngFor="let item of getHiraganaRowTitles()">
             <!-- {{getHiraganaRowCharacters(item) | json}} -->
             <td *ngFor="let char of getHiraganaRowCharacters(item); trackBy:englishCharacter">
                     <button mat-raised-button
-                        [disabled]="checkHiraganaSelected(selectedCharacters$ | async, char?.english)"
+                        [disabled]="checkHiraganaSelected(selectEnabledHiragana$ | async, char)"
+                        (click)="selectChoice(char)"
                     >
-                        {{char?.japanese}}
+                        {{displayCharacter(char, challengeLanguage$ | async)}}
                     </button>
             </td>
         </tr>

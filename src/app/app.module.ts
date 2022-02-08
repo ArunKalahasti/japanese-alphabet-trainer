@@ -11,6 +11,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { CharacterSelectorComponent } from './character-selector/character-selector.component';
 import { StoreModule } from '@ngrx/store';
@@ -19,13 +21,19 @@ import { environment } from '../environments/environment';
 import { reducers, metaReducers } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { SettingsEffects } from './store/settings.effects';
-import { HiraganaFlashTrainerComponent } from './hiragana-flash-trainer/hiragana-flash-trainer.component';
+import { HiraganaFlashTrainerComponent } from './flash-trainer/flash-trainer.component';
+import { HiraganaKeyboardComponent } from './structured-keyboard/structured-keyboard.component';
+import { RandomizedKeyboardComponent } from './randomized-keyboard/randomized-keyboard.component';
+import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CharacterSelectorComponent,
-    HiraganaFlashTrainerComponent
+    HiraganaFlashTrainerComponent,
+    HiraganaKeyboardComponent,
+    RandomizedKeyboardComponent,
+    SettingsDialogComponent
   ],
   imports: [
     AppRoutingModule,
@@ -39,6 +47,8 @@ import { HiraganaFlashTrainerComponent } from './hiragana-flash-trainer/hiragana
     MatExpansionModule,
     MatGridListModule,
     MatCheckboxModule,
+    MatIconModule,
+    MatDialogModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([SettingsEffects])

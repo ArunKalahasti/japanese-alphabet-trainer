@@ -1,0 +1,13 @@
+<mat-card class="keyboard-container">
+    <ng-container *ngFor="let char of selectEnabledHiragana$ | async; let i = index">
+        <button mat-raised-button
+            (click)="selectChoice(char)"
+        >
+            {{displayCharacter(char, challengeLanguage$ | async)}}
+        </button>
+        <br *ngIf="i % 5 === 4">
+    </ng-container>
+    <div class="options">
+        <button mat-raised-button (click)="randomizeChoiceOrder()">randomize order</button>
+    </div>
+</mat-card>

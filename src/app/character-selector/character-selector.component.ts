@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Character } from '../character';
-import { hiragana } from '../hiragana';
+import { hiraganaCharMap } from '../hiragana';
 import { SettingsState } from '../store/settings.reducer';
 import { featureSettings } from '../store/settings.selectors';
 import * as SettingsActions from '../store/settings.actions';
@@ -16,7 +16,7 @@ export class CharacterSelectorComponent implements OnInit {
 
   selectedCharacters$ = this.store.select(featureSettings);
 
-  hiragana = hiragana;
+  hiragana = hiraganaCharMap;
 
   constructor(
     private store: Store
@@ -26,28 +26,28 @@ export class CharacterSelectorComponent implements OnInit {
   }
 
   getHiraganaColumnTitles(): string[] {
-    return Object.keys(hiragana['vowels']);
+    return Object.keys(hiraganaCharMap['vowels']);
   }
 
   getHiraganaRowTitles(): string[] {
-    return Object.keys(hiragana);
+    return Object.keys(hiraganaCharMap);
   }
 
   getHiraganaRowCharacters(category: string): string[] {
-    return Object.keys(hiragana[category]);
+    return Object.keys(hiraganaCharMap[category]);
   }
 
   checkHiraganaSelected(selectedCharacters: SettingsState | null, character: string): boolean {
-    return !!selectedCharacters?.hiragana?.includes(character);
+    return !!selectedCharacters?.enabledHiragana?.map(c => c.english).includes(character);
   }
 
   checkHiraganaRowSelected(selectedCharacters: SettingsState | null, character: string): boolean {
-    return Object.keys(hiragana[character]).every(c => selectedCharacters?.hiragana.includes(c));
+    return Object.keys(hiraganaCharMap[character]).every(c => selectedCharacters?.enabledHiragana.map(c => c.english).includes(c));
   }
 
   checkHiraganaRowPartial(selectedCharacters: SettingsState | null, character: string): boolean {
-    return !Object.keys(hiragana[character]).every(c => selectedCharacters?.hiragana.includes(c)) 
-    && Object.keys(hiragana[character]).some(c => selectedCharacters?.hiragana.includes(c));
+    return !Object.keys(hiraganaCharMap[character]).every(c => selectedCharacters?.enabledHiragana.map(c => c.english).includes(c)) 
+    && Object.keys(hiraganaCharMap[character]).some(c => selectedCharacters?.enabledHiragana.map(c => c.english).includes(c));
   }
 
   toggleHiraganaSelected(character: string): void {
@@ -55,7 +55,7 @@ export class CharacterSelectorComponent implements OnInit {
   }
 
   toggleHiraganaRowSelected(hiraganaRow: string, $event: MatCheckboxChange): void {
-    const charsToToggle = Object.keys(hiragana[hiraganaRow]).filter(c => hiragana[hiraganaRow][c] !== null)
+    const charsToToggle = Object.keys(hiraganaCharMap[hiraganaRow]).filter(c => hiraganaCharMap[hiraganaRow][c] !== null)
     if ($event.checked) {
       this.store.dispatch(SettingsActions.selectCharacters({hiragana: charsToToggle}));
     } else {
@@ -65,7 +65,7 @@ export class CharacterSelectorComponent implements OnInit {
   }
 
   buildCharacter(english: string, row: string): Character {
-    return new Character(english, hiragana[row][english]);
+    return new Character(english, hiraganaCharMap[row][english]);
   }
 
 }

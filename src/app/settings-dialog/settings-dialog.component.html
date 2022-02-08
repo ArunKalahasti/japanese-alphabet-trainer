@@ -1,0 +1,22 @@
+<table>
+    <tr>
+        <td>Challenge Language:</td>
+        <td>
+            <mat-button-toggle-group (change)="changeLanguage($event)">
+                <mat-button-toggle value="Hiragana" [checked]="isSelected('Hiragana', challengeLanguage$ | async)">Hiragana</mat-button-toggle>
+                <mat-button-toggle value="English" [checked]="isSelected('English', challengeLanguage$ | async)">English</mat-button-toggle>
+            </mat-button-toggle-group>
+        </td>
+    </tr>
+    <tr>
+        <td>Answer Keyboard Type:</td>
+        <td>
+            <mat-button-toggle-group (change)="changeAnswerKeyboardType($event)">
+                <mat-button-toggle value="Structured" [checked]="isSelected('Structured', answerKeyboardType$ | async)">Structured</mat-button-toggle>
+                <mat-button-toggle value="Randomized" [checked]="isSelected('Randomized', answerKeyboardType$ | async)">Randomized</mat-button-toggle>
+            </mat-button-toggle-group>
+        </td>
+    </tr>
+</table>
+
+<app-character-selector></app-character-selector>

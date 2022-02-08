@@ -1,0 +1,19 @@
+button {
+    margin-top: .25rem;
+}
+
+button:not(:last-child) {
+    margin-right: .25rem;
+}
+
+.keyboard-container {
+    margin: 1rem;
+    width: fit-content;
+}
+
+.options {
+    display: flex;
+    button {
+        flex-grow: 1;
+    }
+}
