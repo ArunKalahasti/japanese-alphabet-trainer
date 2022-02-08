@@ -1,6 +1,36 @@
-{{selectedCharacters$ | async | json}}
-
-<mat-grid-list cols="6" rowHeight="3:1">
+<!-- {{selectedCharacters$ | async | json}} -->
+<mat-card style="margin: 1rem; width: fit-content;">
+    <table>
+        <tr>
+            <th></th>
+            <th *ngFor="let item of getHiraganaColumnTitles()">
+                <mat-checkbox [disabled]="true">{{item}}</mat-checkbox>
+            </th>
+        </tr>
+        <tr *ngFor="let rowTitle of getHiraganaRowTitles()">
+            <td>
+                <mat-checkbox
+                    [checked]="checkHiraganaRowSelected(selectedCharacters$ | async, rowTitle)"
+                    [indeterminate]="checkHiraganaRowPartial(selectedCharacters$ | async, rowTitle)"
+                    (change)="toggleHiraganaRowSelected(rowTitle, $event)"
+                >
+                    {{rowTitle}}
+                </mat-checkbox>
+            </td>
+            <td *ngFor="let item of getHiraganaRowCharacters(rowTitle)">
+                <mat-card *ngIf="hiragana[rowTitle][item]">
+                    <mat-checkbox
+                        [checked]="checkHiraganaSelected(selectedCharacters$ | async, item)"
+                        (change)="toggleHiraganaSelected(item)"
+                    >
+                        {{item}}  {{hiragana[rowTitle][item]}}
+                    </mat-checkbox>
+                </mat-card>
+            </td>
+        </tr>
+    </table>
+</mat-card>
+<!-- <mat-grid-list cols="6" rowHeight="3:1">
     <mat-grid-tile></mat-grid-tile>
     <mat-grid-tile *ngFor="let item of getHiraganaColumnTitles()">
         <mat-checkbox [disabled]="true">{{item}}</mat-checkbox>
@@ -16,15 +46,15 @@
             </mat-checkbox>
         </mat-grid-tile>
         <mat-grid-tile *ngFor="let item of getHiraganaRowCharacters(rowTitle)">
-            <mat-card>
+            <mat-card *ngIf="hiragana[rowTitle][item]">
                 
                 <mat-checkbox
                     [checked]="checkHiraganaSelected(selectedCharacters$ | async, item)"
                     (change)="toggleHiraganaSelected(item)"
                 >
-                    {{buildCharacter(item, rowTitle) | json}}
+                    {{item}}  {{hiragana[rowTitle][item]}}
                 </mat-checkbox>
             </mat-card>
         </mat-grid-tile>
     </ng-container>
-</mat-grid-list>
+</mat-grid-list> -->

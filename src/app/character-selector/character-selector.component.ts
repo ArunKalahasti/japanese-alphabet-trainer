@@ -55,11 +55,11 @@ export class CharacterSelectorComponent implements OnInit {
   }
 
   toggleHiraganaRowSelected(hiraganaRow: string, $event: MatCheckboxChange): void {
-    console.log($event);
+    const charsToToggle = Object.keys(hiragana[hiraganaRow]).filter(c => hiragana[hiraganaRow][c] !== null)
     if ($event.checked) {
-      this.store.dispatch(SettingsActions.selectCharacters({hiragana: Object.keys(hiragana[hiraganaRow])}));
+      this.store.dispatch(SettingsActions.selectCharacters({hiragana: charsToToggle}));
     } else {
-      this.store.dispatch(SettingsActions.unselectCharacters({hiragana: Object.keys(hiragana[hiraganaRow])}));
+      this.store.dispatch(SettingsActions.unselectCharacters({hiragana: charsToToggle}));
       
     }
   }
