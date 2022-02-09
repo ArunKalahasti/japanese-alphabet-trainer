@@ -1,0 +1,23 @@
+<mat-card style="margin: 1rem; padding: 1rem;">
+    <div>
+        <span style="display : inline-block">
+            PenSize <span id="lineWidth">{{penSize}}</span>
+            <mat-slider type="range" id="penSize" min="1" max="30" [(ngModel)]="penSize" (change)="changePenSize()"></mat-slider>
+            <br>
+            <canvas id="canvas" width="300" height="300" style="border: 2px solid; cursor: crosshair;"></canvas>
+            <br>
+            <br>
+            <button mat-raised-button (click)="canvasErase()">Erase</button>
+            <button mat-raised-button (click)="canvasSend()">Check</button>
+            <button mat-raised-button (click)="canvasUndo()">Undo</button>
+            <button mat-raised-button (click)="canvasRedo()">Redo</button>
+            <br>
+            <!-- result: <span id="result">{{result | json}}</span> -->
+        </span>
+    </div>
+    <sub>
+        Canvas tool adapted from <a target="_blank" href="https://github.com/ChenYuHo/handwriting.js">ChenYuHo/handwriting.js</a>
+        <br>
+        Handwriting recognition powered by Google IME API
+    </sub>
+</mat-card>

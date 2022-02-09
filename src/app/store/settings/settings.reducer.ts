@@ -6,7 +6,7 @@ import * as SettingsActions from './settings.actions';
 export const settingsFeatureKey = 'settings';
 
 export type SettingsChallengeLanguageOptions = 'Hiragana' | 'English';
-export type SettingsAnswerKeyboardTypeOptions = 'Structured' | 'Randomized';
+export type SettingsAnswerKeyboardTypeOptions = 'Structured' | 'Randomized' | 'Handwritten';
 
 export interface SettingsState {
   enabledHiragana: Character[],
@@ -20,7 +20,7 @@ export const initialState: SettingsState = {
   enabledHiragana: [],
   hiraganaFlashQuery: null,
   challengeLanguage: 'English',
-  answerKeyboardType: 'Structured',
+  answerKeyboardType: 'Handwritten',
   shouldFavorMistakes: true
 };
 

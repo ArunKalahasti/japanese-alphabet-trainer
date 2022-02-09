@@ -27,16 +27,29 @@ export class SettingsEffects implements OnInitEffects {
   }
 
   public testResponse$ = createEffect(() => this.actions$.pipe(
-    ofType(SettingsActions.testResponse),
+    ofType(SettingsActions.testCharacterResponse),
     withLatestFrom(
       this.store.select(selectHiraganaFlashQuery)
     ),
-    map(([response, challenge]) => {
-      if (response.response.english === challenge?.english) {
+    map(([action, challenge]) => {
+      if (action.response.english === challenge?.english) {
         return ScoreActions.correctGuess({challenge});
       } else {
         return ScoreActions.wrongGuess({challenge});
       }
+    })
+  ));
+
+  public testResponses$ = createEffect(() => this.actions$.pipe(
+    ofType(SettingsActions.testHiraganaResponse),
+    withLatestFrom(
+      this.store.select(selectHiraganaFlashQuery)
+    ),
+    map(([action, challenge]) => {
+      if (action.response === challenge?.japanese) {
+        return ScoreActions.correctGuess({challenge});
+      };
+      return ScoreActions.wrongGuess({challenge});
     })
   ));
 

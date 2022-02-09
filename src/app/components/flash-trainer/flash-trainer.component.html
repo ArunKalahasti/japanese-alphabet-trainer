@@ -19,5 +19,6 @@
 </mat-card>
 <div [ngSwitch]="answerKeyboardType$ | async">
     <app-randomized-keyboard *ngSwitchCase="'Randomized'" (characterSelectedEvent)="selectChoice($event)"></app-randomized-keyboard>
+    <app-handwriting-keyboard *ngSwitchCase="'Handwritten'" (hiraganaSelectedEvent)="selectHiragana($event)"></app-handwriting-keyboard>
     <app-structured-keyboard *ngSwitchDefault (characterSelectedEvent)="selectChoice($event)"></app-structured-keyboard>
 </div>

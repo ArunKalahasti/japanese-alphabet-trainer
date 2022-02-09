@@ -31,9 +31,14 @@ export const setQuery = createAction(
   props<{challenge: Character | null}>()
 );
 
-export const testResponse = createAction(
-  '[FlashTrainer] Test Response',
+export const testCharacterResponse = createAction(
+  '[FlashTrainer] Test Character Response',
   props<{response: Character}>()
+);
+
+export const testHiraganaResponse = createAction(
+  '[FlashTrainer] Test Hiragana Response',
+  props<{response: string}>()
 );
 
 export const setChallengeLanguage = createAction(

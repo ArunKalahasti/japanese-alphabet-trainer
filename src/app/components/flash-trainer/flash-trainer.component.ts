@@ -36,11 +36,12 @@ export class HiraganaFlashTrainerComponent implements OnInit {
     this.store.dispatch(SettingsActions.generateQuery());
   }
 
-  selectChoice(char: Character | null): void {
-    if (char) {
-      console.log(char);
-      this.store.dispatch(SettingsActions.testResponse({response: char}));
-    }
+  selectHiragana(hiragana: string) {
+    this.store.dispatch(SettingsActions.testHiraganaResponse({response: hiragana}));
+  }
+
+  selectChoice(char: Character): void {
+    this.store.dispatch(SettingsActions.testCharacterResponse({response: char}));
   }
 
   openSettingsDialog() {

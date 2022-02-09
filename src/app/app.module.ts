@@ -14,6 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { CharacterSelectorComponent } from './components/character-selector/character-selector.component';
 import { StoreModule } from '@ngrx/store';
@@ -28,6 +29,7 @@ import { RandomizedKeyboardComponent } from './components/randomized-keyboard/ra
 import { SettingsDialogComponent } from './components/settings-dialog/settings-dialog.component';
 import { ScoreEffects } from './store/score/score.effects';
 import { CharacterScoreComponent } from './components/character-score/character-score.component';
+import { HandwritingKeyboardComponent } from './components/handwriting-keyboard/handwriting-keyboard.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { CharacterScoreComponent } from './components/character-score/character-
     HiraganaKeyboardComponent,
     RandomizedKeyboardComponent,
     SettingsDialogComponent,
-    CharacterScoreComponent
+    CharacterScoreComponent,
+    HandwritingKeyboardComponent
   ],
   imports: [
     AppRoutingModule,
@@ -54,6 +57,7 @@ import { CharacterScoreComponent } from './components/character-score/character-
     MatIconModule,
     MatDialogModule,
     MatTooltipModule,
+    MatSliderModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([SettingsEffects, ScoreEffects])
