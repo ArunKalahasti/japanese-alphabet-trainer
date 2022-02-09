@@ -1,3 +1,13 @@
+<mat-card class="score">
+    <h2>
+        TOTAL CORRECT: {{correctGuesses$ | async}} / {{totalGuesses$ | async}} - {{calcPercent(correctGuesses$ | async, totalGuesses$ | async)}}%<br>
+        LONGEST STREAK: {{highStreak$ | async}}<br>
+        STREAK: {{correctStreak$ | async}}
+        <button mat-mini-fab (click)="resetScore()" style="position: absolute; right: .5rem">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </h2>
+</mat-card>
 <h1 class="query">
     <span>
         <!-- {{(hiraganaFlashQuery$ | async)?.english}} -->
@@ -44,13 +54,3 @@
         </tr>
     </table>
 </div>
-<mat-card class="score">
-    <h2>
-        TOTAL CORRECT: {{correctGuesses$ | async}} / {{totalGuesses$ | async}} - {{calcPercent(correctGuesses$ | async, totalGuesses$ | async)}}%<br>
-        LONGEST STREAK: {{highStreak$ | async}}<br>
-        STREAK: {{correctStreak$ | async}}
-        <button mat-mini-fab (click)="resetScore()" style="position: absolute; right: .5rem">
-            <mat-icon>refresh</mat-icon>
-        </button>
-    </h2>
-</mat-card>
