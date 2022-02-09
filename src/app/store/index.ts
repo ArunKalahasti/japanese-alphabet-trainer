@@ -7,16 +7,18 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 
-import * as fromSelectedCharacter from './settings/settings.reducer';
+import * as fromSettings from './settings/settings.reducer';
+import * as fromScore from './score/score.reducer';
 
 
 export interface State {
-  [fromSelectedCharacter.settingsFeatureKey]: fromSelectedCharacter.SettingsState;
+  [fromSettings.settingsFeatureKey]: fromSettings.SettingsState;
+  [fromScore.scoreFeatureKey]: fromScore.ScoreState;
 }
 
 export const reducers: ActionReducerMap<State> = {
-
-  [fromSelectedCharacter.settingsFeatureKey]: fromSelectedCharacter.reducer,
+  [fromSettings.settingsFeatureKey]: fromSettings.reducer,
+  [fromScore.scoreFeatureKey]: fromScore.reducer,
 };
 
 

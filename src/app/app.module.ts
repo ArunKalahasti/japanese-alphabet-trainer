@@ -25,6 +25,8 @@ import { HiraganaFlashTrainerComponent } from './components/flash-trainer/flash-
 import { HiraganaKeyboardComponent } from './components/structured-keyboard/structured-keyboard.component';
 import { RandomizedKeyboardComponent } from './components/randomized-keyboard/randomized-keyboard.component';
 import { SettingsDialogComponent } from './components/settings-dialog/settings-dialog.component';
+import { ScoreEffects } from './store/score/score.effects';
+import { CharacterScoreComponent } from './components/character-score/character-score.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { SettingsDialogComponent } from './components/settings-dialog/settings-d
     HiraganaFlashTrainerComponent,
     HiraganaKeyboardComponent,
     RandomizedKeyboardComponent,
-    SettingsDialogComponent
+    SettingsDialogComponent,
+    CharacterScoreComponent
   ],
   imports: [
     AppRoutingModule,
@@ -51,7 +54,7 @@ import { SettingsDialogComponent } from './components/settings-dialog/settings-d
     MatDialogModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([SettingsEffects])
+    EffectsModule.forRoot([SettingsEffects, ScoreEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

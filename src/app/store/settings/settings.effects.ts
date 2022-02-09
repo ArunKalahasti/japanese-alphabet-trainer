@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { withLatestFrom, map, filter } from 'rxjs';
+import { withLatestFrom, map, filter, switchMap } from 'rxjs';
 import { Character } from '../../character';
 import { hiraganaCharMap } from '../../hiragana';
 import * as SettingsActions from './settings.actions';
+import * as ScoreActions from '../score/score.actions';
 import { selectHiraganaFlashQuery } from './settings.selectors';
 
 
@@ -29,8 +30,13 @@ export class SettingsEffects implements OnInitEffects {
     withLatestFrom(
       this.store.select(selectHiraganaFlashQuery)
     ),
-    filter(([response, query]) => response.challenge.english === query?.english),
-    map(() => SettingsActions.generateQuery())
+    map(([response, query]) => {
+      if (response.challenge.english === query?.english) {
+        return ScoreActions.correctGuess({query: query});
+      } else {
+        return ScoreActions.wrongGuess({query: query});
+      }
+    })
   ));
 
   public updateEnabledCharacters$ = createEffect(() => this.actions$.pipe(

@@ -7,6 +7,14 @@
         <mat-icon>settings</mat-icon>
     </button>
 </h1>
+<mat-card class="score">
+    <h2>
+        TOTAL CORRECT: {{correctGuesses$ | async}} / {{totalGuesses$ | async}} -- STREAK: {{correctStreak$ | async}}
+        <button mat-mini-fab (click)="resetScore()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </h2>
+</mat-card>
 <div [ngSwitch]="answerKeyboardType$ | async">
     <app-randomized-keyboard *ngSwitchCase="'Randomized'" (characterSelectedEvent)="selectChoice($event)"></app-randomized-keyboard>
     <app-structured-keyboard *ngSwitchDefault (characterSelectedEvent)="selectChoice($event)"></app-structured-keyboard>

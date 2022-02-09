@@ -1,8 +1,9 @@
-<!-- {{selectedCharacters$ | async | json}} -->
 <mat-card style="margin: 1rem; width: fit-content;">
     <table>
         <tr>
-            <th></th>
+            <th style="padding-right: 1rem;">
+                <button mat-raised-button (click)="clearCharacterStats()">Clear Stats</button>
+            </th>
             <th *ngFor="let item of getHiraganaColumnTitles()">
                 <mat-checkbox [disabled]="true">{{item}}</mat-checkbox>
             </th>
@@ -25,36 +26,10 @@
                     >
                         {{item}}  {{hiragana[rowTitle][item]}}
                     </mat-checkbox>
+                    <br>
+                    <app-character-score [character]="item"></app-character-score>
                 </mat-card>
             </td>
         </tr>
     </table>
 </mat-card>
-<!-- <mat-grid-list cols="6" rowHeight="3:1">
-    <mat-grid-tile></mat-grid-tile>
-    <mat-grid-tile *ngFor="let item of getHiraganaColumnTitles()">
-        <mat-checkbox [disabled]="true">{{item}}</mat-checkbox>
-    </mat-grid-tile>
-    <ng-container *ngFor="let rowTitle of getHiraganaRowTitles()">
-        <mat-grid-tile>
-            <mat-checkbox
-            [checked]="checkHiraganaRowSelected(selectedCharacters$ | async, rowTitle)"
-            [indeterminate]="checkHiraganaRowPartial(selectedCharacters$ | async, rowTitle)"
-            (change)="toggleHiraganaRowSelected(rowTitle, $event)"
-            >
-                {{rowTitle}}
-            </mat-checkbox>
-        </mat-grid-tile>
-        <mat-grid-tile *ngFor="let item of getHiraganaRowCharacters(rowTitle)">
-            <mat-card *ngIf="hiragana[rowTitle][item]">
-                
-                <mat-checkbox
-                    [checked]="checkHiraganaSelected(selectedCharacters$ | async, item)"
-                    (change)="toggleHiraganaSelected(item)"
-                >
-                    {{item}}  {{hiragana[rowTitle][item]}}
-                </mat-checkbox>
-            </mat-card>
-        </mat-grid-tile>
-    </ng-container>
-</mat-grid-list> -->

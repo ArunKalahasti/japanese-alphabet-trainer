@@ -1,0 +1,5 @@
+
+<span *ngIf="characterStats$ | async as characterStats; else elseBlock">
+    {{characterStats.correctGuesses}} : {{characterStats.wrongGuesses}} - {{calcPercent(characterStats.correctGuesses, characterStats.wrongGuesses)}}%
+</span>
+<ng-template #elseBlock>0 : 0 - 0%</ng-template>
