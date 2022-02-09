@@ -13,6 +13,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { CharacterSelectorComponent } from './components/character-selector/character-selector.component';
 import { StoreModule } from '@ngrx/store';
@@ -52,6 +53,7 @@ import { CharacterScoreComponent } from './components/character-score/character-
     MatCheckboxModule,
     MatIconModule,
     MatDialogModule,
+    MatTooltipModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([SettingsEffects, ScoreEffects])

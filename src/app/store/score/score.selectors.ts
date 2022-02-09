@@ -29,7 +29,12 @@ export const selectTotalGuesses = createSelector(
     (correct, wrong) => correct + wrong
 );
 
-export const selectCharacterStats = (character: string) => createSelector(
+export const selectAllCharacterStats = createSelector(
     featureSettings,
-    (state) => state.characterStats[character]
-)
+    (state) => state.characterStats
+);
+
+export const selectCharacterStats = (character: string) => createSelector(
+    selectAllCharacterStats,
+    (state) => state[character]
+);

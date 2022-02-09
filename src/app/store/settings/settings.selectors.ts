@@ -22,3 +22,8 @@ export const selectAnswerKeyboardType = createSelector(
     featureSettings,
     (state) => state.answerKeyboardType
 );
+
+export const selectShouldFavorMistakes = createSelector(
+    featureSettings,
+    (state) => state.shouldFavorMistakes
+);

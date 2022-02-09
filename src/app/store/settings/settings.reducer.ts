@@ -12,14 +12,16 @@ export interface SettingsState {
   enabledHiragana: Character[],
   hiraganaFlashQuery: Character | null,
   challengeLanguage: SettingsChallengeLanguageOptions,
-  answerKeyboardType: SettingsAnswerKeyboardTypeOptions
+  answerKeyboardType: SettingsAnswerKeyboardTypeOptions,
+  shouldFavorMistakes: boolean
 }
 
 export const initialState: SettingsState = {
   enabledHiragana: [],
   hiraganaFlashQuery: null,
   challengeLanguage: 'English',
-  answerKeyboardType: 'Structured'
+  answerKeyboardType: 'Structured',
+  shouldFavorMistakes: true
 };
 
 export const reducer = createReducer(
@@ -74,16 +76,11 @@ export const reducer = createReducer(
     });
     return newState;
   }),
-  on(SettingsActions.generateQuery, (state) => {
-    const newState: SettingsState = {...state};
-    if (state.enabledHiragana.length > 1) {
-      const viableOptions = state.enabledHiragana.filter(c => c.english !== state.hiraganaFlashQuery?.english);
-      newState.hiraganaFlashQuery = viableOptions[Math.floor(Math.random()*viableOptions.length)];
-    } else if (state.enabledHiragana.length === 1) {
-      newState.hiraganaFlashQuery = state.enabledHiragana[0];
-    } else {
-      newState.hiraganaFlashQuery = null;
-    }
+  on(SettingsActions.setQuery, (state, {challenge}) => {
+    const newState: SettingsState = {
+      ...state,
+      hiraganaFlashQuery: challenge
+    };
     return newState;
   }),
   on(SettingsActions.setChallengeLanguage, (state, {challengeLanguage}) => {
@@ -97,6 +94,13 @@ export const reducer = createReducer(
     const newState: SettingsState = {
       ...state,
       answerKeyboardType
+    };
+    return newState;
+  }),
+  on(SettingsActions.setShouldFavorMistakes, (state, {shouldFavorMistakes}) => {
+    const newState: SettingsState = {
+      ...state,
+      shouldFavorMistakes
     };
     return newState;
   })

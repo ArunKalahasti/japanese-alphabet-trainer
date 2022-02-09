@@ -11,10 +11,10 @@ export const clearCharacterStats = createAction(
 
 export const correctGuess = createAction(
   '[Score] Correct Guess',
-  props<{query: Character}>()
+  props<{challenge: Character}>()
 );
 
 export const wrongGuess = createAction(
   '[Score] Wrong Guess',
-  props<{query: Character | null}>()
+  props<{challenge: Character | null}>()
 );

@@ -39,7 +39,7 @@ export class HiraganaFlashTrainerComponent implements OnInit {
   selectChoice(char: Character | null): void {
     if (char) {
       console.log(char);
-      this.store.dispatch(SettingsActions.testResponse({challenge: char}));
+      this.store.dispatch(SettingsActions.testResponse({response: char}));
     }
   }
 

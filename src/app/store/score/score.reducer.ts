@@ -39,7 +39,7 @@ export const reducer = createReducer(
     }
     return newState;
   }),
-  on(ScoreActions.correctGuess, (state, {query: guess}) => {
+  on(ScoreActions.correctGuess, (state, {challenge: guess}) => {
     const newState: ScoreState = {
       ...state,
       correctGuesses: state.correctGuesses + 1,
@@ -67,7 +67,7 @@ export const reducer = createReducer(
 
     return newState;
   }),
-  on(ScoreActions.wrongGuess, (state, {query: guess}) => {
+  on(ScoreActions.wrongGuess, (state, {challenge: guess}) => {
     const newState: ScoreState = {
       ...state,
       wrongGuesses: state.wrongGuesses + 1,

@@ -26,9 +26,14 @@ export const generateQuery = createAction(
   '[FlashTrainer] Generate Query'
 );
 
+export const setQuery = createAction(
+  '[FlashTrainer] Set Query',
+  props<{challenge: Character | null}>()
+);
+
 export const testResponse = createAction(
   '[FlashTrainer] Test Response',
-  props<{challenge: Character}>()
+  props<{response: Character}>()
 );
 
 export const setChallengeLanguage = createAction(
@@ -39,4 +44,9 @@ export const setChallengeLanguage = createAction(
 export const setAnswerKeyboardType = createAction(
   '[SettingsDialog] Set Answer Keyboard Type',
   props<{answerKeyboardType: SettingsAnswerKeyboardTypeOptions}>()
+);
+
+export const setShouldFavorMistakes = createAction(
+  '[SettingsDialog] Set Should Favor Mistakes',
+  props<{shouldFavorMistakes: boolean}>()
 );
