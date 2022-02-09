@@ -8,6 +8,7 @@ export interface ScoreState {
   correctGuesses: number,
   wrongGuesses: number,
   correctStreak: number,
+  highStreak: number,
   characterStats: {[key: string]: {correctGuesses: number, wrongGuesses: number}}
 }
 
@@ -15,6 +16,7 @@ export const initialState: ScoreState = {
   correctGuesses: 0,
   wrongGuesses: 0,
   correctStreak: 0,
+  highStreak: 0,
   characterStats: {}
 };
 
@@ -25,7 +27,8 @@ export const reducer = createReducer(
       ...state,
       correctGuesses: 0,
       wrongGuesses: 0,
-      correctStreak: 0
+      correctStreak: 0,
+      highStreak: 0
     }
     return newState;
   }),
@@ -42,6 +45,10 @@ export const reducer = createReducer(
       correctGuesses: state.correctGuesses + 1,
       correctStreak: state.correctStreak + 1
     };
+
+    if (newState.correctStreak > newState.highStreak) {
+      newState.highStreak = newState.correctStreak;
+    }
 
     if (Object.keys(newState.characterStats).includes(guess.english)) {
       newState.characterStats = {

@@ -8,6 +8,11 @@ export const selectCorrectStreak = createSelector(
     (state) => state.correctStreak
 );
 
+export const selectHighStreak = createSelector(
+    featureSettings,
+    (state) => state.highStreak
+);
+
 export const selectCorrectGuesses = createSelector(
     featureSettings,
     (state) => state.correctGuesses

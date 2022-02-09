@@ -8,7 +8,7 @@ import * as SettingsActions from '../../store/settings/settings.actions';
 import * as ScoreActions from '../../store/score/score.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.component';
-import { selectCorrectGuesses, selectCorrectStreak, selectTotalGuesses } from 'src/app/store/score/score.selectors';
+import { selectCorrectGuesses, selectCorrectStreak, selectHighStreak, selectTotalGuesses } from 'src/app/store/score/score.selectors';
 
 @Component({
   selector: 'app-flash-trainer',
@@ -23,6 +23,7 @@ export class HiraganaFlashTrainerComponent implements OnInit {
   answerKeyboardType$ = this.store.select(selectAnswerKeyboardType);
 
   correctStreak$ = this.store.select(selectCorrectStreak);
+  highStreak$ = this.store.select(selectHighStreak);
   correctGuesses$ = this.store.select(selectCorrectGuesses);
   totalGuesses$ = this.store.select(selectTotalGuesses);
 
@@ -52,6 +53,15 @@ export class HiraganaFlashTrainerComponent implements OnInit {
 
   resetScore() {
     this.store.dispatch(ScoreActions.clearScores());
+  }
+
+  calcPercent(correctGuesses: number | null, totalGuesses: number | null): string {
+    if (correctGuesses !==  null && correctGuesses !==  0 && totalGuesses !== null && totalGuesses !== 0) {
+      return (100 * (correctGuesses / (totalGuesses))).toFixed(0);
+    } else {
+      return '0';
+    }
+    
   }
   
 }
