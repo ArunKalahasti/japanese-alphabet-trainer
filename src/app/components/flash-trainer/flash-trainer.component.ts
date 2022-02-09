@@ -3,12 +3,14 @@ import { Store } from '@ngrx/store';
 import { Character } from '../../character';
 import { hiraganaCharMap } from '../../hiragana';
 import { SettingsChallengeLanguageOptions, SettingsState } from '../../store/settings/settings.reducer';
-import { featureSettings, selectAnswerKeyboardType, selectChallengeLanguage, selectHiraganaFlashQuery } from '../../store/settings/settings.selectors';
+import { featureSettings, selectAnswerKeyboardType, selectChallengeLanguage, selectHiraganaFlashQuery, selectShouldFavorMistakes } from '../../store/settings/settings.selectors';
 import * as SettingsActions from '../../store/settings/settings.actions';
 import * as ScoreActions from '../../store/score/score.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.component';
 import { selectCorrectGuesses, selectCorrectStreak, selectHighStreak, selectTotalGuesses } from 'src/app/store/score/score.selectors';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-flash-trainer',
@@ -21,6 +23,7 @@ export class HiraganaFlashTrainerComponent implements OnInit {
   hiraganaFlashQuery$ = this.store.select(selectHiraganaFlashQuery)
   challengeLanguage$ = this.store.select(selectChallengeLanguage);
   answerKeyboardType$ = this.store.select(selectAnswerKeyboardType);
+  shouldFavorMistakes$ = this.store.select(selectShouldFavorMistakes);
 
   correctStreak$ = this.store.select(selectCorrectStreak);
   highStreak$ = this.store.select(selectHighStreak);
@@ -62,7 +65,22 @@ export class HiraganaFlashTrainerComponent implements OnInit {
     } else {
       return '0';
     }
-    
+  }
+
+  isSelected(selection: string, selected: string | null): boolean {
+    return selected === selection;
+  }
+
+  changeAnswerKeyboardType($event: MatButtonToggleChange) {
+    this.store.dispatch(SettingsActions.setAnswerKeyboardType({answerKeyboardType: $event.value}));
+  }
+
+  changeLanguage($event: MatButtonToggleChange) {
+    this.store.dispatch(SettingsActions.setChallengeLanguage({challengeLanguage: $event.value}));
+  }
+
+  setShouldFavorMistakes($event: MatSlideToggleChange) {
+    this.store.dispatch(SettingsActions.setShouldFavorMistakes({shouldFavorMistakes: $event.checked}));
   }
   
 }

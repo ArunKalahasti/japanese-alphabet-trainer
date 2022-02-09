@@ -88,6 +88,9 @@ export const reducer = createReducer(
       ...state,
       challengeLanguage
     };
+    if (challengeLanguage === 'Hiragana' && newState.answerKeyboardType === 'Handwritten') {
+      newState.answerKeyboardType = 'Structured';
+    }
     return newState;
   }),
   on(SettingsActions.setAnswerKeyboardType, (state, {answerKeyboardType}) => {

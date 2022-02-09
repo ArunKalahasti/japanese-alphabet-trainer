@@ -7,6 +7,43 @@
         <mat-icon>settings</mat-icon>
     </button>
 </h1>
+<div [ngSwitch]="answerKeyboardType$ | async">
+    <app-randomized-keyboard *ngSwitchCase="'Randomized'" (characterSelectedEvent)="selectChoice($event)"></app-randomized-keyboard>
+    <app-handwriting-keyboard *ngSwitchCase="'Handwritten'" (hiraganaSelectedEvent)="selectHiragana($event)"></app-handwriting-keyboard>
+    <app-structured-keyboard *ngSwitchDefault (characterSelectedEvent)="selectChoice($event)"></app-structured-keyboard>
+</div>
+<div style="margin: 1rem;">
+    <table>
+        <tr>
+            <td>Challenge Language:</td>
+            <td>
+                <mat-button-toggle-group (change)="changeLanguage($event)">
+                    <mat-button-toggle value="Hiragana" [checked]="isSelected('Hiragana', challengeLanguage$ | async)">Hiragana</mat-button-toggle>
+                    <mat-button-toggle value="English" [checked]="isSelected('English', challengeLanguage$ | async)">English</mat-button-toggle>
+                </mat-button-toggle-group>
+            </td>
+        </tr>
+        <tr>
+            <td>Answer Keyboard Type:</td>
+            <td>
+                <mat-button-toggle-group (change)="changeAnswerKeyboardType($event)">
+                    <mat-button-toggle value="Structured" [checked]="isSelected('Structured', answerKeyboardType$ | async)">Structured</mat-button-toggle>
+                    <mat-button-toggle value="Randomized" [checked]="isSelected('Randomized', answerKeyboardType$ | async)">Randomized</mat-button-toggle>
+                    <mat-button-toggle value="Handwritten" [disabled]="isSelected('Hiragana', challengeLanguage$ | async)" [checked]="isSelected('Handwritten', answerKeyboardType$ | async)">Handwritten</mat-button-toggle>
+                </mat-button-toggle-group>
+            </td>
+        </tr>
+        <tr matTooltip="Favor characters that have previously been guessed wrong when generating challenge character">
+            <td>Challenge Mistakes:</td>
+            <td>
+                <mat-slide-toggle
+                    [checked]="shouldFavorMistakes$ | async"
+                    (change)="setShouldFavorMistakes($event)"
+                ></mat-slide-toggle>
+            </td>
+        </tr>
+    </table>
+</div>
 <mat-card class="score">
     <h2>
         TOTAL CORRECT: {{correctGuesses$ | async}} / {{totalGuesses$ | async}} - {{calcPercent(correctGuesses$ | async, totalGuesses$ | async)}}%<br>
@@ -17,8 +54,3 @@
         </button>
     </h2>
 </mat-card>
-<div [ngSwitch]="answerKeyboardType$ | async">
-    <app-randomized-keyboard *ngSwitchCase="'Randomized'" (characterSelectedEvent)="selectChoice($event)"></app-randomized-keyboard>
-    <app-handwriting-keyboard *ngSwitchCase="'Handwritten'" (hiraganaSelectedEvent)="selectHiragana($event)"></app-handwriting-keyboard>
-    <app-structured-keyboard *ngSwitchDefault (characterSelectedEvent)="selectChoice($event)"></app-structured-keyboard>
-</div>
