@@ -1,29 +1,29 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { settingsFeatureKey, SettingsState } from './settings.reducer';
 
-export const featureSettings = createFeatureSelector<SettingsState>(settingsFeatureKey);
+export const selectSettingsFeature = createFeatureSelector<SettingsState>(settingsFeatureKey);
 
 export const selectHiraganaFlashQuery = createSelector(
-    featureSettings,
+    selectSettingsFeature,
     (state) => state.hiraganaFlashQuery
 );
 
 export const selectEnabledHiragana = createSelector(
-    featureSettings,
+    selectSettingsFeature,
     (state) => state.enabledHiragana
 );
 
 export const selectChallengeLanguage = createSelector(
-    featureSettings,
+    selectSettingsFeature,
     (state) => state.challengeLanguage
 );
 
 export const selectAnswerKeyboardType = createSelector(
-    featureSettings,
+    selectSettingsFeature,
     (state) => state.answerKeyboardType
 );
 
 export const selectShouldFavorMistakes = createSelector(
-    featureSettings,
+    selectSettingsFeature,
     (state) => state.shouldFavorMistakes
 );

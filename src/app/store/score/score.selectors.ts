@@ -1,25 +1,25 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { scoreFeatureKey, ScoreState } from './score.reducer';
 
-export const featureSettings = createFeatureSelector<ScoreState>(scoreFeatureKey);
+export const selectScoreFeature = createFeatureSelector<ScoreState>(scoreFeatureKey);
 
 export const selectCorrectStreak = createSelector(
-    featureSettings,
+    selectScoreFeature,
     (state) => state.correctStreak
 );
 
 export const selectHighStreak = createSelector(
-    featureSettings,
+    selectScoreFeature,
     (state) => state.highStreak
 );
 
 export const selectCorrectGuesses = createSelector(
-    featureSettings,
+    selectScoreFeature,
     (state) => state.correctGuesses
 );
 
 export const selectWrongGuesses = createSelector(
-    featureSettings,
+    selectScoreFeature,
     (state) => state.wrongGuesses
 );
 
@@ -30,7 +30,7 @@ export const selectTotalGuesses = createSelector(
 );
 
 export const selectAllCharacterStats = createSelector(
-    featureSettings,
+    selectScoreFeature,
     (state) => state.characterStats
 );
 

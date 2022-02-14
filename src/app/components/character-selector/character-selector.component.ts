@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Character } from '../../character';
 import { hiraganaCharMap } from '../../hiragana';
 import { SettingsState } from '../../store/settings/settings.reducer';
-import { featureSettings } from '../../store/settings/settings.selectors';
+import { selectSettingsFeature } from '../../store/settings/settings.selectors';
 import * as SettingsActions from '../../store/settings/settings.actions';
 import * as ScoreActions from '../../store/score/score.actions';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -15,7 +15,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 })
 export class CharacterSelectorComponent implements OnInit {
 
-  selectedCharacters$ = this.store.select(featureSettings);
+  selectedCharacters$ = this.store.select(selectSettingsFeature);
 
   hiragana = hiraganaCharMap;
 

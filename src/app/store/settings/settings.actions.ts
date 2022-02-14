@@ -2,6 +2,14 @@ import { createAction, props } from '@ngrx/store';
 import { Character } from '../../character';
 import { SettingsAnswerKeyboardTypeOptions, SettingsChallengeLanguageOptions } from './settings.reducer';
 
+export const saveSettings = createAction(
+  '[SettingsEffects] Save Settings'
+);
+
+export const loadSettings = createAction(
+  '[SettingsEffects] Load Settings'
+);
+
 export const setSelectedCharacters = createAction(
   '[SelectedCharacter] Set SelectedCharacters',
   props<{hiragana: Character[]}>()

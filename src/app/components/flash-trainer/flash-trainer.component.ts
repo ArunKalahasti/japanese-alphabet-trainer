@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Character } from '../../character';
 import { hiraganaCharMap } from '../../hiragana';
 import { SettingsChallengeLanguageOptions, SettingsState } from '../../store/settings/settings.reducer';
-import { featureSettings, selectAnswerKeyboardType, selectChallengeLanguage, selectHiraganaFlashQuery, selectShouldFavorMistakes } from '../../store/settings/settings.selectors';
+import { selectSettingsFeature, selectAnswerKeyboardType, selectChallengeLanguage, selectHiraganaFlashQuery, selectShouldFavorMistakes } from '../../store/settings/settings.selectors';
 import * as SettingsActions from '../../store/settings/settings.actions';
 import * as ScoreActions from '../../store/score/score.actions';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,7 +19,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 })
 export class HiraganaFlashTrainerComponent implements OnInit {
 
-  selectedCharacters$ = this.store.select(featureSettings);
+  selectedCharacters$ = this.store.select(selectSettingsFeature);
   hiraganaFlashQuery$ = this.store.select(selectHiraganaFlashQuery)
   challengeLanguage$ = this.store.select(selectChallengeLanguage);
   answerKeyboardType$ = this.store.select(selectAnswerKeyboardType);

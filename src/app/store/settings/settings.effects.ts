@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { withLatestFrom, map, filter, switchMap } from 'rxjs';
+import { withLatestFrom, map, filter, switchMap, tap } from 'rxjs';
 import { Character } from '../../character';
 import { hiraganaCharMap } from '../../hiragana';
 import * as SettingsActions from './settings.actions';
 import * as ScoreActions from '../score/score.actions';
-import { selectEnabledHiragana, selectHiraganaFlashQuery, selectShouldFavorMistakes } from './settings.selectors';
-import { selectAllCharacterStats, selectCharacterStats } from '../score/score.selectors';
+import { selectEnabledHiragana, selectHiraganaFlashQuery, selectSettingsFeature, selectShouldFavorMistakes } from './settings.selectors';
+import { selectAllCharacterStats } from '../score/score.selectors';
+import { settingsLocalStorageKey } from './settings.reducer';
 
 
 
@@ -22,9 +23,45 @@ export class SettingsEffects implements OnInitEffects {
   ) {}
 
   ngrxOnInitEffects(): Action {
-    // TODO: get previous selected characters from local storage
-    return SettingsActions.setSelectedCharacters({hiragana: Object.keys(hiraganaCharMap['vowels']).map(char => new Character(char, hiraganaCharMap['vowels'][char]))})
+    return SettingsActions.loadSettings()
   }
+
+  public saveSettings$ = createEffect(() => this.actions$.pipe(
+    ofType(SettingsActions.saveSettings),
+    withLatestFrom(this.store.select(selectSettingsFeature)),
+    tap(([, settingsState]) => {
+      console.log(settingsState);
+      console.log(JSON.stringify(settingsState.enabledHiragana));
+      localStorage.setItem(settingsLocalStorageKey, JSON.stringify(settingsState.enabledHiragana));
+    })
+  ), {dispatch: false});
+
+  public loadSettings$ = createEffect(() => this.actions$.pipe(
+    ofType(SettingsActions.loadSettings),
+    map(() => {
+      const enabledHiraganaString = localStorage.getItem(settingsLocalStorageKey);
+      if (!enabledHiraganaString) {
+        return SettingsActions.setSelectedCharacters({
+          hiragana: Object.keys(hiraganaCharMap['vowels'])
+          .map(char => new Character(char, hiraganaCharMap['vowels'][char]))
+        });
+      } else {
+        const enabledHiraganaObject: {english: string, japanese: string}[] = JSON.parse(enabledHiraganaString);
+        return SettingsActions.setSelectedCharacters({
+          hiragana: enabledHiraganaObject.map(char => new Character(char.english, char.japanese))
+        });
+      }
+    })
+  ));
+
+  public saveSettingsOnUpdateEnabledCharacters$ = createEffect(() => this.actions$.pipe(
+    ofType(
+      SettingsActions.toggleSelectedCharacters,
+      SettingsActions.selectCharacters,
+      SettingsActions.unselectCharacters,
+    ),
+    map(() => SettingsActions.saveSettings())
+  ));
 
   public testResponse$ = createEffect(() => this.actions$.pipe(
     ofType(SettingsActions.testCharacterResponse),
@@ -53,7 +90,7 @@ export class SettingsEffects implements OnInitEffects {
     })
   ));
 
-  public updateEnabledCharacters$ = createEffect(() => this.actions$.pipe(
+  public generateQueryOnUpdateEnabledCharacters$ = createEffect(() => this.actions$.pipe(
     ofType(
       SettingsActions.toggleSelectedCharacters,
       SettingsActions.selectCharacters,

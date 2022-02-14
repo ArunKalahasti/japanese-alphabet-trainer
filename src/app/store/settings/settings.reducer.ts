@@ -5,6 +5,8 @@ import * as SettingsActions from './settings.actions';
 
 export const settingsFeatureKey = 'settings';
 
+export const settingsLocalStorageKey = 'AK_JAT-SETTINGS';
+
 export type SettingsChallengeLanguageOptions = 'Hiragana' | 'English';
 export type SettingsAnswerKeyboardTypeOptions = 'Structured' | 'Randomized' | 'Handwritten';
 
