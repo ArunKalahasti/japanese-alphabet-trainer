@@ -8,7 +8,7 @@ import * as SettingsActions from './settings.actions';
 import * as ScoreActions from '../score/score.actions';
 import { selectEnabledHiragana, selectHiraganaFlashQuery, selectSettingsFeature, selectShouldFavorMistakes } from './settings.selectors';
 import { selectAllCharacterStats } from '../score/score.selectors';
-import { settingsLocalStorageKey } from './settings.reducer';
+import { initialSettingsState, settingsLocalStorageKey } from './settings.reducer';
 
 
 
@@ -23,35 +23,55 @@ export class SettingsEffects implements OnInitEffects {
   ) {}
 
   ngrxOnInitEffects(): Action {
-    return SettingsActions.loadSettings()
+    const settingsLocalStorageString = localStorage.getItem(settingsLocalStorageKey);
+    if (settingsLocalStorageString) {
+      return SettingsActions.loadSettings({settings: JSON.parse(settingsLocalStorageString)});
+    } else {
+      return SettingsActions.loadSettings({settings: initialSettingsState});
+    }
   }
 
   public saveSettings$ = createEffect(() => this.actions$.pipe(
     ofType(SettingsActions.saveSettings),
     withLatestFrom(this.store.select(selectSettingsFeature)),
     tap(([, settingsState]) => {
-      console.log(settingsState);
-      console.log(JSON.stringify(settingsState.enabledHiragana));
-      localStorage.setItem(settingsLocalStorageKey, JSON.stringify(settingsState.enabledHiragana));
+      localStorage.setItem(settingsLocalStorageKey, JSON.stringify(settingsState));
     })
   ), {dispatch: false});
 
-  public loadSettings$ = createEffect(() => this.actions$.pipe(
+  public loadSettingsEnabledCharacters$ = createEffect(() => this.actions$.pipe(
     ofType(SettingsActions.loadSettings),
-    map(() => {
-      const enabledHiraganaString = localStorage.getItem(settingsLocalStorageKey);
-      if (!enabledHiraganaString) {
+    map((action) => {
+      const settings = action.settings;
+      if (!settings?.enabledHiragana || settings.enabledHiragana.length === 0) {
         return SettingsActions.setSelectedCharacters({
           hiragana: Object.keys(hiraganaCharMap['vowels'])
           .map(char => new Character(char, hiraganaCharMap['vowels'][char]))
         });
       } else {
-        const enabledHiraganaObject: {english: string, japanese: string}[] = JSON.parse(enabledHiraganaString);
         return SettingsActions.setSelectedCharacters({
-          hiragana: enabledHiraganaObject.map(char => new Character(char.english, char.japanese))
+          hiragana: settings.enabledHiragana.map(char => new Character(char.english, char.japanese))
         });
       }
     })
+  ));
+
+  public loadSettingsChallengeLanguage$ = createEffect(() => this.actions$.pipe(
+    ofType(SettingsActions.loadSettings),
+    filter(action => !!action.settings?.challengeLanguage),
+    map((action) => SettingsActions.setChallengeLanguage({challengeLanguage: action.settings?.challengeLanguage || initialSettingsState.challengeLanguage}))
+  ));
+
+  public loadSettingsAnswerKeyboardType$ = createEffect(() => this.actions$.pipe(
+    ofType(SettingsActions.loadSettings),
+    filter(action => !!action.settings?.answerKeyboardType),
+    map((action) => SettingsActions.setAnswerKeyboardType({answerKeyboardType: action.settings?.answerKeyboardType || initialSettingsState.answerKeyboardType}))
+  ));
+
+  public loadSettingsFavorMistakes$ = createEffect(() => this.actions$.pipe(
+    ofType(SettingsActions.loadSettings),
+    filter(action => undefined !== action.settings?.shouldFavorMistakes),
+    map((action) => SettingsActions.setShouldFavorMistakes({shouldFavorMistakes: action.settings?.shouldFavorMistakes || false}))
   ));
 
   public saveSettingsOnUpdateEnabledCharacters$ = createEffect(() => this.actions$.pipe(
@@ -59,6 +79,9 @@ export class SettingsEffects implements OnInitEffects {
       SettingsActions.toggleSelectedCharacters,
       SettingsActions.selectCharacters,
       SettingsActions.unselectCharacters,
+      SettingsActions.setChallengeLanguage,
+      SettingsActions.setAnswerKeyboardType,
+      SettingsActions.setShouldFavorMistakes,
     ),
     map(() => SettingsActions.saveSettings())
   ));

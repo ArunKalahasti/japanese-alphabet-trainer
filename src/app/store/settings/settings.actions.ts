@@ -1,13 +1,14 @@
 import { createAction, props } from '@ngrx/store';
 import { Character } from '../../character';
-import { SettingsAnswerKeyboardTypeOptions, SettingsChallengeLanguageOptions } from './settings.reducer';
+import { SettingsAnswerKeyboardTypeOptions, SettingsChallengeLanguageOptions, SettingsState } from './settings.reducer';
 
 export const saveSettings = createAction(
   '[SettingsEffects] Save Settings'
 );
 
 export const loadSettings = createAction(
-  '[SettingsEffects] Load Settings'
+  '[SettingsEffects] Load Settings',
+  props<{settings: SettingsState | null}>()
 );
 
 export const setSelectedCharacters = createAction(

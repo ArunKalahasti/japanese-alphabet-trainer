@@ -18,7 +18,7 @@ export interface SettingsState {
   shouldFavorMistakes: boolean
 }
 
-export const initialState: SettingsState = {
+export const initialSettingsState: SettingsState = {
   enabledHiragana: [],
   hiraganaFlashQuery: null,
   challengeLanguage: 'English',
@@ -27,7 +27,7 @@ export const initialState: SettingsState = {
 };
 
 export const reducer = createReducer(
-  initialState,
+  initialSettingsState,
   on(SettingsActions.setSelectedCharacters, (state, {hiragana}) => {
     const newState: SettingsState  = {
         ...state,
