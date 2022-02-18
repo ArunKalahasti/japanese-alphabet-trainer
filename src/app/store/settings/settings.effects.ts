@@ -6,7 +6,7 @@ import { Character } from '../../character';
 import { hiraganaCharMap } from '../../hiragana';
 import * as SettingsActions from './settings.actions';
 import * as ScoreActions from '../score/score.actions';
-import { selectEnabledHiragana, selectHiraganaFlashQuery, selectSettingsFeature, selectShouldFavorMistakes } from './settings.selectors';
+import { selectEnabledHiragana, selectSettingsFeature, selectShouldFavorMistakes } from './settings.selectors';
 import { selectAllCharacterStats } from '../score/score.selectors';
 import { initialSettingsState, settingsLocalStorageKey } from './settings.reducer';
 
@@ -86,86 +86,13 @@ export class SettingsEffects implements OnInitEffects {
     map(() => SettingsActions.saveSettings())
   ));
 
-  public testResponse$ = createEffect(() => this.actions$.pipe(
-    ofType(SettingsActions.testCharacterResponse),
-    withLatestFrom(
-      this.store.select(selectHiraganaFlashQuery)
-    ),
-    map(([action, challenge]) => {
-      if (action.response.english === challenge?.english) {
-        return ScoreActions.correctGuess({challenge});
-      } else {
-        return ScoreActions.wrongGuess({challenge});
-      }
-    })
-  ));
-
-  public testResponses$ = createEffect(() => this.actions$.pipe(
-    ofType(SettingsActions.testHiraganaResponse),
-    withLatestFrom(
-      this.store.select(selectHiraganaFlashQuery)
-    ),
-    map(([action, challenge]) => {
-      if (action.response === challenge?.japanese) {
-        return ScoreActions.correctGuess({challenge});
-      };
-      return ScoreActions.wrongGuess({challenge});
-    })
-  ));
-
   public generateQueryOnUpdateEnabledCharacters$ = createEffect(() => this.actions$.pipe(
     ofType(
       SettingsActions.toggleSelectedCharacters,
       SettingsActions.selectCharacters,
       SettingsActions.unselectCharacters,
     ),
-    map(() => SettingsActions.generateQuery())
-  ));
-
-  public generateQuery$ = createEffect(() => this.actions$.pipe(
-    ofType(
-      SettingsActions.generateQuery
-    ),
-    withLatestFrom(
-      this.store.select(selectEnabledHiragana),
-      this.store.select(selectHiraganaFlashQuery),
-      this.store.select(selectAllCharacterStats),
-      this.store.select(selectShouldFavorMistakes)
-    ),
-    map(([, enabledHiragana, query, characterStats, shouldFavorMistakes]) => {
-      let challenge: Character | null = null;
-      if (enabledHiragana.length > 1) {
-        let viableOptions = enabledHiragana.filter(c => c.english !== query?.english);
-
-        const totalWrongGuesses = Object.keys(characterStats)
-          .filter(c => c !== query?.english)
-          .reduce((prev, key) => prev + (characterStats[key].wrongGuesses / (characterStats[key].wrongGuesses + characterStats[key].correctGuesses) ), 0);
-
-        if (totalWrongGuesses === 0 || !shouldFavorMistakes) {
-          challenge = viableOptions[Math.floor(Math.random()*viableOptions.length)];
-        } else {
-          // Remove characters with no wrong guesses
-          viableOptions = viableOptions.filter(char => characterStats[char.english]?.wrongGuesses > 0);
-
-          var cumul = totalWrongGuesses
-          var random = Math.floor(Math.random() * totalWrongGuesses)
-        
-          for(var i = 0; i < viableOptions.length; i++) {
-            if (characterStats[viableOptions[i].english]) {
-              cumul -= (characterStats[viableOptions[i].english].wrongGuesses / (characterStats[viableOptions[i].english].wrongGuesses + characterStats[viableOptions[i].english].correctGuesses) )
-              if (random >= cumul) {
-                challenge = viableOptions[i]
-              }
-            }
-          }
-        }
-      } else if (enabledHiragana.length === 1) {
-        challenge = enabledHiragana[0];
-      } else {
-        challenge = null;
-      }
-      return SettingsActions.setQuery({challenge});
-    })
+    map(() => ScoreActions.generateQuery())
   ));
 
 }

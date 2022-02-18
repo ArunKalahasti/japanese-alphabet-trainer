@@ -2,8 +2,10 @@
     display: flex;
     justify-content: center;
     margin: auto;
-    font-size: 5rem;
-    line-height: 5rem;
+    h1 {
+        font-size: 5rem;
+        line-height: 5rem;
+    }
 }
 
 .score {

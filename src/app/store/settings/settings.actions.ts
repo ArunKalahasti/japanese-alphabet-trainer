@@ -31,25 +31,6 @@ export const unselectCharacters = createAction(
   props<{hiragana: string[]}>()
 );
 
-export const generateQuery = createAction(
-  '[FlashTrainer] Generate Query'
-);
-
-export const setQuery = createAction(
-  '[FlashTrainer] Set Query',
-  props<{challenge: Character | null}>()
-);
-
-export const testCharacterResponse = createAction(
-  '[FlashTrainer] Test Character Response',
-  props<{response: Character}>()
-);
-
-export const testHiraganaResponse = createAction(
-  '[FlashTrainer] Test Hiragana Response',
-  props<{response: string}>()
-);
-
 export const setChallengeLanguage = createAction(
   '[SettingsDialog] Set Challenge Language',
   props<{challengeLanguage: SettingsChallengeLanguageOptions}>()

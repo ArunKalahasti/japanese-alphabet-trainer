@@ -12,7 +12,6 @@ export type SettingsAnswerKeyboardTypeOptions = 'Structured' | 'Randomized' | 'H
 
 export interface SettingsState {
   enabledHiragana: Character[],
-  hiraganaFlashQuery: Character | null,
   challengeLanguage: SettingsChallengeLanguageOptions,
   answerKeyboardType: SettingsAnswerKeyboardTypeOptions,
   shouldFavorMistakes: boolean
@@ -20,7 +19,6 @@ export interface SettingsState {
 
 export const initialSettingsState: SettingsState = {
   enabledHiragana: [],
-  hiraganaFlashQuery: null,
   challengeLanguage: 'English',
   answerKeyboardType: 'Handwritten',
   shouldFavorMistakes: true
@@ -76,13 +74,6 @@ export const reducer = createReducer(
         newState.enabledHiragana = newState.enabledHiragana.filter(e => e.english !== char);
       }
     });
-    return newState;
-  }),
-  on(SettingsActions.setQuery, (state, {challenge}) => {
-    const newState: SettingsState = {
-      ...state,
-      hiraganaFlashQuery: challenge
-    };
     return newState;
   }),
   on(SettingsActions.setChallengeLanguage, (state, {challengeLanguage}) => {

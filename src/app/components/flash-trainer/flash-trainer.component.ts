@@ -1,16 +1,16 @@
 import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Character } from '../../character';
-import { hiraganaCharMap } from '../../hiragana';
-import { SettingsChallengeLanguageOptions, SettingsState } from '../../store/settings/settings.reducer';
-import { selectSettingsFeature, selectAnswerKeyboardType, selectChallengeLanguage, selectHiraganaFlashQuery, selectShouldFavorMistakes } from '../../store/settings/settings.selectors';
+import { SettingsChallengeLanguageOptions } from '../../store/settings/settings.reducer';
+import { selectSettingsFeature, selectAnswerKeyboardType, selectChallengeLanguage, selectShouldFavorMistakes } from '../../store/settings/settings.selectors';
 import * as SettingsActions from '../../store/settings/settings.actions';
 import * as ScoreActions from '../../store/score/score.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.component';
-import { selectCorrectGuesses, selectCorrectStreak, selectHighStreak, selectTotalGuesses } from 'src/app/store/score/score.selectors';
+import { selectCorrectGuesses, selectCorrectStreak, selectHighStreak, selectHiraganaFlashQuery, selectShowAnswerState, selectTotalGuesses } from 'src/app/store/score/score.selectors';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-flash-trainer',
@@ -29,6 +29,7 @@ export class HiraganaFlashTrainerComponent implements OnInit {
   highStreak$ = this.store.select(selectHighStreak);
   correctGuesses$ = this.store.select(selectCorrectGuesses);
   totalGuesses$ = this.store.select(selectTotalGuesses);
+  hideAnswer$ = this.store.select(selectShowAnswerState).pipe(map(show => !show));
 
   constructor(
     private store: Store,
@@ -36,15 +37,15 @@ export class HiraganaFlashTrainerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(SettingsActions.generateQuery());
+    this.store.dispatch(ScoreActions.generateQuery());
   }
 
   selectHiragana(hiragana: string) {
-    this.store.dispatch(SettingsActions.testHiraganaResponse({response: hiragana}));
+    this.store.dispatch(ScoreActions.testHiraganaResponse({response: hiragana}));
   }
 
   selectChoice(char: Character): void {
-    this.store.dispatch(SettingsActions.testCharacterResponse({response: char}));
+    this.store.dispatch(ScoreActions.testEnglishResponse({response: char}));
   }
 
   openSettingsDialog() {
@@ -53,6 +54,10 @@ export class HiraganaFlashTrainerComponent implements OnInit {
 
   displayChallenge(char: Character | null, challengeLanguage: SettingsChallengeLanguageOptions | null): string {
     return challengeLanguage === 'English' ? char?.english || 'ERROR' : char?.japanese || 'ERROR';
+  }
+
+  displayAnswer(char: Character | null, challengeLanguage: SettingsChallengeLanguageOptions | null): string {
+    return challengeLanguage === 'English' ? char?.japanese || 'ERROR' : char?.english || 'ERROR';
   }
 
   resetScore() {
@@ -81,6 +86,14 @@ export class HiraganaFlashTrainerComponent implements OnInit {
 
   setShouldFavorMistakes($event: MatSlideToggleChange) {
     this.store.dispatch(SettingsActions.setShouldFavorMistakes({shouldFavorMistakes: $event.checked}));
+  }
+
+  showAnswer() {
+    this.store.dispatch(ScoreActions.showAnswer());
+  }
+
+  hideAnswer() {
+    this.store.dispatch(ScoreActions.hideAnswer());
   }
   
 }

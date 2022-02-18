@@ -8,12 +8,19 @@
         </button>
     </h2>
 </mat-card>
-<h1 class="query">
-    <span>
-        <!-- {{(hiraganaFlashQuery$ | async)?.english}} -->
+<div class="query">
+    <h1>
         {{displayChallenge(hiraganaFlashQuery$ | async, challengeLanguage$ | async)}}
-    </span>
-</h1>
+    </h1>
+    <div>
+        <button mat-mini-fab (mousedown)="showAnswer()" (mouseup)="hideAnswer()">
+            <mat-icon>visibility</mat-icon>
+        </button>
+        <h2 [hidden]="hideAnswer$ | async">
+            {{displayAnswer(hiraganaFlashQuery$ | async, challengeLanguage$ | async)}}
+        </h2>
+    </div>
+</div>
 <div [ngSwitch]="answerKeyboardType$ | async">
     <app-randomized-keyboard *ngSwitchCase="'Randomized'" (characterSelectedEvent)="selectChoice($event)"></app-randomized-keyboard>
     <app-handwriting-keyboard *ngSwitchCase="'Handwritten'" (hiraganaSelectedEvent)="selectHiragana($event)"></app-handwriting-keyboard>

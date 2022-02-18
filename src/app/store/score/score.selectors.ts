@@ -38,3 +38,13 @@ export const selectCharacterStats = (character: string) => createSelector(
     selectAllCharacterStats,
     (state) => state[character]
 );
+
+export const selectHiraganaFlashQuery = createSelector(
+    selectScoreFeature,
+    (state) => state.hiraganaFlashQuery
+);
+
+export const selectShowAnswerState = createSelector(
+    selectScoreFeature,
+    (state) => state.showAnswer
+);

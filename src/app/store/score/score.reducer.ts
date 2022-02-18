@@ -1,10 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { Character } from 'src/app/character';
 import * as ScoreActions from './score.actions';
 
 
 export const scoreFeatureKey = 'score';
 
 export interface ScoreState {
+  hiraganaFlashQuery: Character | null,
+  showAnswer: boolean,
   correctGuesses: number,
   wrongGuesses: number,
   correctStreak: number,
@@ -13,6 +16,8 @@ export interface ScoreState {
 }
 
 export const initialState: ScoreState = {
+  hiraganaFlashQuery: null,
+  showAnswer: false,
   correctGuesses: 0,
   wrongGuesses: 0,
   correctStreak: 0,
@@ -91,6 +96,27 @@ export const reducer = createReducer(
       }
     }
 
+    return newState;
+  }),
+  on(ScoreActions.setQuery, (state, {challenge}) => {
+    const newState: ScoreState = {
+      ...state,
+      hiraganaFlashQuery: challenge
+    };
+    return newState;
+  }),
+  on(ScoreActions.showAnswer, (state) => {
+    const newState: ScoreState = {
+      ...state,
+      showAnswer: true
+    };
+    return newState;
+  }),
+  on(ScoreActions.hideAnswer, (state) => {
+    const newState: ScoreState = {
+      ...state,
+      showAnswer: false
+    };
     return newState;
   })
 );

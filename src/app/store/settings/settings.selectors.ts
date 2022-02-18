@@ -3,11 +3,6 @@ import { settingsFeatureKey, SettingsState } from './settings.reducer';
 
 export const selectSettingsFeature = createFeatureSelector<SettingsState>(settingsFeatureKey);
 
-export const selectHiraganaFlashQuery = createSelector(
-    selectSettingsFeature,
-    (state) => state.hiraganaFlashQuery
-);
-
 export const selectEnabledHiragana = createSelector(
     selectSettingsFeature,
     (state) => state.enabledHiragana
