@@ -13,7 +13,12 @@
         {{displayChallenge(hiraganaFlashQuery$ | async, challengeLanguage$ | async)}}
     </h1>
     <div>
-        <button mat-mini-fab (mousedown)="showAnswer()" (mouseup)="hideAnswer()">
+        <button mat-mini-fab
+            (touchstart)="showAnswer()"
+            (mousedown)="showAnswer()"
+            (touchend)="hideAnswer()"
+            (mouseup)="hideAnswer()"
+        >
             <mat-icon>visibility</mat-icon>
         </button>
         <h2 [hidden]="hideAnswer$ | async">
